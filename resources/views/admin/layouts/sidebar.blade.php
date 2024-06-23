@@ -39,15 +39,34 @@
                
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                        <i class="ri-layout-3-line"></i> <span data-key="t-layouts">Danh mục sản phẩm</span> <span class="badge badge-pill bg-danger" data-key="t-hot">Hot</span>
+                    <a class="nav-link menu-link" href="#sidebarCatalogues" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCatalogues">
+                        <i class="ri-layout-3-line"></i> <span>Danh mục sản phẩm</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarLayouts">
+                    <div class="collapse menu-dropdown" id="sidebarCatalogues">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{route('admin.catalogues.index')}}" target="_blank" class="nav-link" data-key="t-horizontal">Horizontal</a>
+                                <a href="{{route('admin.catalogues.index')}}" class="nav-link">Danh sách</a>
                             </li>
-                           
+                            <li class="nav-item">
+                                <a href="{{route('admin.catalogues.create')}}"  class="nav-link">Thêm mới</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li> <!-- end Dashboard Menu -->
+
+                
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarProducts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProducts">
+                        <i class="ri-layout-3-line"></i> <span>Sản phẩm</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarProducts">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{route('admin.products.index')}}" class="nav-link">Danh sách</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.products.create')}}"  class="nav-link">Thêm mới</a>
+                            </li>
                         </ul>
                     </div>
                 </li> <!-- end Dashboard Menu -->

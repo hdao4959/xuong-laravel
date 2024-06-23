@@ -1,4 +1,4 @@
-@extends('admin.layouts.master');
+@extends('admin.layouts.master')
 @section('title')
     Cập nhật Danh mục sản phẩm: {{ $model->name }}
 @endsection
