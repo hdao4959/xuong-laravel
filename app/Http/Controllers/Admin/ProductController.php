@@ -46,11 +46,11 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $dataProduct = $request->except(['product_variants', 'tags', 'product_galleries']);
-        $dataProduct['is_active'] = isset($dataProduct['is_active']) ? 1 : 0;
-        $dataProduct['is_hot_deal'] = isset($dataProduct['is_hot_deal']) ? 1 : 0;
-        $dataProduct['is_good_deal'] = isset($dataProduct['is_good_deal']) ? 1 : 0;
-        $dataProduct['is_new'] = isset($dataProduct['is_new']) ? 1 : 0;
-        $dataProduct['is_show_home'] = isset($dataProduct['is_show_home']) ? 1 : 0;
+        $dataProduct['is_active'] ??= 0;
+        $dataProduct['is_hot_deal'] ??= 0;
+        $dataProduct['is_good_deal'] ??= 0;
+        $dataProduct['is_new'] ??= 0;
+        $dataProduct['is_show_home'] ??= 0;
         $dataProduct['slug'] = Str::slug($dataProduct['name'] . '-' . $dataProduct['sku']);
         $dataProductVariantsTmp = $request->product_variants;
         $dataProductVariants = [];
@@ -90,12 +90,24 @@ class ProductController extends Controller
                     'product_id' => $product->id,
                     'image' => Storage::put('products', $item)
                 ]);
-            }
+            }   
             DB::commit();
-
             return redirect()->route('admin.products.index');
+
         } catch (\Exception $exception) {
             DB::rollBack();
+            if($dataProduct['img_thumbnail'] && Storage::exists($dataProduct['img_thumbnail'])){
+                Storage::delete($dataProduct['img_thumbnail']);
+            }
+
+          
+            // if( $dataProductVariants){
+            //     foreach($dataProductVariants as $value){
+            //         if(Storage::exists($value['image'])){
+            //             Storage::delete($value['image']);
+            //         }
+            //     }
+            // }
             dd($exception->getMessage());
             return back();
         }
@@ -133,12 +145,6 @@ class ProductController extends Controller
         try {
             DB::transaction(function() use ($product){
                 $product->tags()->sync([]);
-                $productGalleries = $product->galleries();
-                foreach($productGalleries as $prdGallerry){
-                    if(Storage::exists($prdGallerry)){
-                        Storage::delete($prdGallerry);
-                    }
-                }
                 $product->galleries()->delete();
                 $product->variant()->delete();
                 if($product['img_thumbnail'] && Storage::exists($product['img_thumbnail'])){
