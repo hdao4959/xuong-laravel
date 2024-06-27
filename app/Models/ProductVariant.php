@@ -16,4 +16,11 @@ class ProductVariant extends Model
         'product_color_id',
         'image'
     ];
+
+    public function product_size(){
+        return $this->belongsTo(ProductSize::class);
+    }
+    public function product_color(){
+        return $this->belongsTo(ProductColor::class);
+    }
 }

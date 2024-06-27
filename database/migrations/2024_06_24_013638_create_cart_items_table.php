@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Cart;
+use App\Models\ProductVariant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,11 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('catelogues', function (Blueprint $table) {
+        Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string('cover')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->foreignIdFor(Cart::class)->constrained();
+            $table->foreignIdFor(ProductVariant::class)->constrained();
+            $table->unsignedInteger('quantity')->default(0);
             $table->timestamps();
         });
     }
@@ -25,6 +27,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('catelogues');
+        Schema::dropIfExists('cart_items');
     }
 };
+

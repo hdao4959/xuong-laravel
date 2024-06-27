@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('type', [User::TYPE_ADMIN, User::TYPE_MEMBER])->default(User::TYPE_MEMBER);
             $table->rememberToken();
             $table->timestamps();
+           
         });
     }
 
